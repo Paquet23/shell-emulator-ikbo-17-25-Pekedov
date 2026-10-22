@@ -1,0 +1,9 @@
+path;type;base64_content
+/;dir;
+home;dir;
+home/user;dir;
+home/user/docs;dir;
+home/user/docs/notes.txt;file;Tm90ZXM=
+var;dir;
+var/log;dir;
+var/log/system.log;file;bG9nIGRhdGE=

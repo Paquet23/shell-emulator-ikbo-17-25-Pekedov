@@ -1,2 +1,27 @@
-# shell-emulator-ikbo-17-25-Pekedov
-Shell emulator for Configuration Management course (IKBO-17-25)
+# Shell Emulator (ИКБО-17-25, Вариант 21)
+
+## Общее описание
+Эмулятор командной оболочки UNIX-подобной ОС. 
+VFS загружается из CSV-файла и хранится в памяти.
+
+**Студент:** Пекедов Дмитрий
+**Группа:** ИКБО-17-25
+
+## Параметры командной строки
+- `--vfs-path <путь>` — путь к CSV-файлу VFS
+- `--script-path <путь>` — путь к стартовому скрипту
+
+## Поддерживаемые команды
+- `ls`, `cd` (Этап 1, 4)
+- `uniq`, `du`, `tac` (Этап 4)
+- `cp` (Этап 5)
+- `vfs-save <путь>` — сохранение VFS в CSV (Этап 3)
+- `exit` — выход
+
+## Запуск
+```bash
+# Интерактивный режим
+bash run.sh --vfs-path test_data/vfs_deep.csv
+
+# Режим скрипта
+bash run.sh --script-path test_data/test_script.txt
