@@ -1,8 +1,25 @@
 """CLI эмулятора оболочки: вариант 21, этапы 1-3."""
 
 import argparse
+import csv
 from pathlib import Path
 import sys
+
+from vfs import VirtualFileSystem
+
+
+def save_vfs(args, vfs):
+    """Проверить параметры и сохранить VFS."""
+    if len(args) != 1:
+        print_error("vfs-save: expected one path")
+        return "error"
+    try:
+        vfs.save(args[0])
+    except (OSError, UnicodeError, ValueError, csv.Error) as error:
+        print_error(f"vfs-save: {error}")
+        return "error"
+    print(f"VFS saved: {args[0]}", flush=True)
+    return "continue"
 
 
 def print_error(message):
@@ -20,6 +37,8 @@ def execute_command(command, args, vfs=None):
     """Вернуть continue, exit или error после выполнения команды."""
     if command is None:
         return "continue"
+    if command == "vfs-save":
+        return save_vfs(args, vfs)
     if command == "exit":
         if args:
             print_error("exit: arguments are not allowed")
@@ -77,11 +96,17 @@ def main(argv=None):
     print(f"[CONFIG] vfs_path={settings.vfs_path!r}", flush=True)
     print(f"[CONFIG] script_path={settings.script_path!r}", flush=True)
     name = Path(settings.vfs_path).stem if settings.vfs_path else "default_vfs"
+    try:
+        vfs = (VirtualFileSystem.load(settings.vfs_path)
+               if settings.vfs_path else VirtualFileSystem())
+    except (OSError, UnicodeError, ValueError, csv.Error) as error:
+        print_error(f"VFS: {error}")
+        return 1
     if settings.script_path:
-        status = run_script(settings.script_path, name)
+        status = run_script(settings.script_path, name, vfs)
         if status != "continue":
             return 1 if status == "error" else 0
-    run_repl(name)
+    run_repl(name, vfs)
     return 0
 
 

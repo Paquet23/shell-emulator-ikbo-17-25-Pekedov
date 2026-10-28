@@ -1,0 +1,7 @@
+# Все успешные режимы этапов 1-3
+
+ls
+ls /home
+cd /home
+vfs-save saved_vfs.csv
+exit

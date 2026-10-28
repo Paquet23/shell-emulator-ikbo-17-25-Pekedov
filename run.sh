@@ -1,2 +1,3 @@
-#!/bin/bash
-python src/main.py "$@"
+#!/usr/bin/env bash
+cd -- "$(dirname -- "$0")" || exit 1
+exec python src/main.py "$@"

@@ -11,3 +11,6 @@ ENV/
 *.swo
 .DS_Store
 Thumbs.db
+
+saved_vfs.csv
+.coverage
